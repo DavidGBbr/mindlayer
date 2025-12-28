@@ -1,3 +1,3 @@
-# clone-tabnews
+# Mindlayer
 
 Project for advanced study
