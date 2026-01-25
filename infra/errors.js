@@ -58,6 +58,27 @@ export class ValidationError extends Error {
   }
 }
 
+export class NotFoundError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Was not possible to find this resource in the system.", {
+      cause,
+    });
+    this.name = "NotFoundError";
+    this.action =
+      action || "Check if the parameters sent in the query are correct.";
+    this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
 export class MethodNotAllowedError extends Error {
   constructor() {
     super("Method forbidden for this endpoint.");
