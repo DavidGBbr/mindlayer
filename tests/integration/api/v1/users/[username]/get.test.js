@@ -10,7 +10,6 @@ beforeAll(async () => {
 describe("GET /api/v1/users/[username]", () => {
   describe("Anonymous user", () => {
     test("With exact case match", async () => {
-
       await orchestrator.createUser({
         username: "SameCase",
         email: "same.case@gmail.com",
