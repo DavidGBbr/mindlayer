@@ -13,9 +13,10 @@ describe("PATCH /api/v1/users/[username]", () => {
   describe("Anonymous user", () => {
     test("With nonexistent 'username'", async () => {
       const response = await fetch(
-        "http://localhost:3000/api/v1/users/NonExistentUser", {
-        method: 'PATCH'
-      }
+        "http://localhost:3000/api/v1/users/NonExistentUser",
+        {
+          method: "PATCH",
+        },
       );
 
       expect(response.status).toBe(404);
@@ -110,15 +111,18 @@ describe("PATCH /api/v1/users/[username]", () => {
 
       expect(user2Response.status).toBe(201);
 
-      const response = await fetch("http://localhost:3000/api/v1/users/email2", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "http://localhost:3000/api/v1/users/email2",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "email1@gmail.com",
+          }),
         },
-        body: JSON.stringify({
-          email: "email1@gmail.com",
-        }),
-      });
+      );
 
       expect(response.status).toBe(400);
 
@@ -276,11 +280,17 @@ describe("PATCH /api/v1/users/[username]", () => {
       expect(responseBody.updated_at > responseBody.created_at).toBe(true);
 
       const userInDatabase = await user.findOneByUsername("newPassword1");
-      const correctPasswordMatch = await password.compare("newPassword2", userInDatabase.password);
+      const correctPasswordMatch = await password.compare(
+        "newPassword2",
+        userInDatabase.password,
+      );
 
       expect(correctPasswordMatch).toBe(true);
 
-      const incorrectPasswordMatch = await password.compare("newPassword1", userInDatabase.password);
+      const incorrectPasswordMatch = await password.compare(
+        "newPassword1",
+        userInDatabase.password,
+      );
 
       expect(incorrectPasswordMatch).toBe(false);
     });
